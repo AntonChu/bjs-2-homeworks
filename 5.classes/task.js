@@ -76,32 +76,30 @@ class Library{
         }
     }
 
-    findBookBy(type, value){
-
-        // for(let i = 0; i < this.books.length; i++){
-        //     if(this.books[i].type === value){
-        //         return this.books[i].name;
-        //     }
-
-        //     return (null); 
-        // }
-        
-        for(let item of this.books){
-            if(item.type === value){
-                return item.name;
+    findBookBy(_key, value){          
+// Почему редактор не дает мне написать первый аргумент функции без подчеркивания? 
+        for(let i = 0; i < this.books.length; i++){
+            if(this.books[i][_key] === value){
+                return this.books[i].name;
             }
-        
-            return null;        
         }
+
+        return null; 
     }
 
     giveBookByName(bookName){
         for(let i = 0; i < this.books.length; i++){
-            if(this.books[i].bookName !== undefined){
+            if(this.books[i].name === bookName){
                 return this.books.splice(i, 1);
-            }
-    
-            return null; 
+            }   
         }
+
+        return 'null';
     }
 }
+
+const library = new Library("Библиотека имени Ленина");
+library.addBook(new NovelBook("Герберт Уэллс", "Машина времени", 1895, 138));
+library.addBook(new Magazine("Мурзилка", 1924, 60));
+
+console.log(library.findBookBy("releaseDate", 1924));
