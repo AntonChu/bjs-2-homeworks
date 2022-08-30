@@ -50,7 +50,10 @@ class Triangle{
 
 
 function getTriangle(a, b, c){
-    let obj;
+    let obj = {
+        getPerimeter:() => 'Ошибка! Треугольник не существует',
+        getArea:() => 'Ошибка! Треугольник не существует',
+    };
     let perimetr = [...arguments].reduce((acc, i) => acc + i, 0);
     let toBeDefined = [...arguments].some(item => item > perimetr - item);
 
@@ -60,7 +63,7 @@ function getTriangle(a, b, c){
         try{
             return new Triangle(a, b, c); 
         } catch(error){
-            throw new Error('Ошибка! Треугольник не существует'); 
+            return obj; 
         }
     }
 }
