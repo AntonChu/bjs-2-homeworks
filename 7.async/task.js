@@ -12,7 +12,6 @@ class AlarmClock{
         try{
             if(this.alarmCollection.find(item => item.id === id)) throw 'Будильник с таким id уже существует';
             this.alarmCollection.push({id, time, callback});
-            // есди меняю местами 2 верхние строки, то в тестах появляется другая ошибка, что не были созданы звонки  
         }catch(error){
             return console.error(error);
         }
@@ -36,13 +35,18 @@ class AlarmClock{
     };
 
     start(){
-        function checkClock(ring){
-            if(this.alarmCollection.find(item => item.time === ring)){
-                callback();
-            }else{
-                setInterval(() => this.alarmCollection.forEach(item => checkClock()), 0);
+        // if(this.timerId){
+        //     return;
+        // }
+
+        const checkClock = (ring) => {
+            if(ring.time === this.getCurrentFormattedTime()){
+                return ring.callback();
             }
         }
+
+        this.timerId = setInterval(() => {this.alarmCollection.forEach(checkClock)
+        }, 60000);
     }
 
     stop(){
@@ -58,9 +62,9 @@ class AlarmClock{
     }
 
     clearAlarms(){
-        stop();
+        this.stop();
         this.alarmCollection = [];
-    }
+    } 
 }
 
 
