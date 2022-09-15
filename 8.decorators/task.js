@@ -17,46 +17,27 @@ function cachingDecoratorNew(func){
 }
 
 
-// function debounceDecoratorNew(func, delay) {
-//   debugger;
-//   let timeId = null;
-//   return function(...args){
-    
-//     if(timeId === null){
-//       timeId = setTimeout(() => {
-//         return func(...args);
-//       }, delay)
-//       return func(...args);
-//     }
-
-//     if(timeId){
-//       clearTimeout(timeId);
-//     }
-
-//     timeId = setTimeout(() => {
-//       return func(...args);
-//     }, delay)
-//   } 
-// }
-
-const sum = (...args) => args.reduce((acc, item) => acc + item, 0);
 
 function debounceDecoratorNew(func, delay) {
   let timeId = null;
-  return function(...args){
-    // debugger;
+
+  function wrapper(...args){
+    debugger;
+    wrapper.allCount++;
     if(timeId){
       clearTimeout(timeId);
     }else{
       console.log(func(...args));
+      wrapper.count++
     } 
 
     timeId = setTimeout(() => {
-      console.log(func(...args))
+      console.log(func(...args)),
+      wrapper.count++
     }, delay)
   } 
+  
+  wrapper.count = 0;
+  wrapper.allCount = 0;
+  return wrapper;
 }
-
-let debSum = debounceDecoratorNew(sum, 5000);
-
-debSum(1, 2, 3);
