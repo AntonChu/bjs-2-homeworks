@@ -1,7 +1,7 @@
 class AlarmClock{
-    constructor(arr = [], id = null){
-        this.alarmCollection = arr,
-        this.timerId = id;
+    constructor(){
+        this.alarmCollection = [],
+        this.timerId = null;
     }
 
     addClock(time, callback, id){
@@ -9,11 +9,10 @@ class AlarmClock{
             throw new Error('Heвозможно идентифицировать будильник. Параметр id не передан');
         }
 
-        try{
-            if(this.alarmCollection.find(item => item.id === id)) throw 'Будильник с таким id уже существует';
+        if(this.alarmCollection.find(item => item.id === id)){
+            console.error('Будильник с таким id уже существует');
+        } else{
             this.alarmCollection.push({id, time, callback});
-        }catch(error){
-            return console.error(error);
         }
     }
 
@@ -35,9 +34,9 @@ class AlarmClock{
     };
 
     start(){
-        // if(this.timerId){
-        //     return;
-        // }
+        if(this.timerId){
+            return;
+        }
 
         const checkClock = (ring) => {
             if(ring.time === this.getCurrentFormattedTime()){
